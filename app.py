@@ -476,6 +476,8 @@ def barber_agenda_view():
         revenue = sum(a.service.price for a in appointments if a.status == 'completed')
         next_appt = next((a for a in appointments if a.status in ('pending', 'confirmed')), None)
 
+        prev_day = ref_date - timedelta(days=1)
+        next_day = ref_date + timedelta(days=1)
         return render_template('barber/agenda.html',
                                view='day',
                                ref_date=ref_date,
@@ -490,6 +492,9 @@ def barber_agenda_view():
                                completed=completed,
                                revenue=revenue,
                                next_appt=next_appt,
+                               prev_day_date=prev_day.isoformat(),
+                               next_day_date=next_day.isoformat(),
+                               minutes_until=None,
                                MONTHS_ES_UPPER=MONTHS_ES_UPPER,
                                DAYS_ES_SHORT=DAYS_ES_SHORT,
                                DAYS_ES=DAYS_ES)
@@ -548,6 +553,8 @@ def barber_agenda_view():
             diff = appt_dt - now_time
             minutes_until = int(diff.total_seconds() / 60)
 
+        prev_week = week_dates[0] - timedelta(days=7)
+        next_week = week_dates[6] + timedelta(days=1)
         return render_template('barber/agenda.html',
                                view='week',
                                ref_date=ref_date,
@@ -563,6 +570,10 @@ def barber_agenda_view():
                                revenue=revenue,
                                next_appt=next_appt,
                                minutes_until=minutes_until,
+                               prev_week_date=prev_week.isoformat(),
+                               next_week_date=next_week.isoformat(),
+                               prev_day_date=ref_date.isoformat(),
+                               next_day_date=ref_date.isoformat(),
                                MONTHS_ES_UPPER=MONTHS_ES_UPPER,
                                DAYS_ES_SHORT=DAYS_ES_SHORT,
                                DAYS_ES=DAYS_ES)
