@@ -247,12 +247,47 @@ function goToStep(stepNum, formData) {
   window.location.href = url;
 }
 
+// ---- Hamburger / Sidebar ----
+
+function initSidebar() {
+  var btn = document.getElementById('hamburgerBtn');
+  var sidebar = document.getElementById('sidebar');
+  var overlay = document.getElementById('sidebarOverlay');
+  if (!btn || !sidebar) return;
+
+  function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('visible');
+    btn.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('visible');
+    btn.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  btn.addEventListener('click', function() {
+    sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+  });
+
+  overlay.addEventListener('click', closeSidebar);
+
+  // Close sidebar on nav link click (mobile)
+  sidebar.querySelectorAll('a').forEach(function(link) {
+    link.addEventListener('click', closeSidebar);
+  });
+}
+
 // ---- Init ----
 
 document.addEventListener('DOMContentLoaded', function() {
   initFlashMessages();
   initBookingFlow();
   initModals();
+  initSidebar();
 
   // Auto-load slots on step 2
   var step2BarberInput = document.getElementById('step2-barber-id');
