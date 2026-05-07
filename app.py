@@ -890,7 +890,19 @@ def api_get_appointment(appt_id):
     })
 
 
+def auto_seed():
+    """Seed the database if it's empty (first deploy)."""
+    if User.query.first():
+        return
+    print("Database is empty — running auto-seed...")
+    from seed import seed
+    seed()
+
+
+with app.app_context():
+    db.create_all()
+    auto_seed()
+
+
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
     app.run(debug=True)
