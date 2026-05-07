@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Iniciar Sesión — Stage & Shears</title>
+  <title>Crear Cuenta — Stage & Shears</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -30,8 +30,21 @@
     {% endwith %}
 
     <div class="login-form">
-      <h2>Iniciar Sesión</h2>
-      <form method="POST" action="{{ url_for('login') }}">
+      <h2>Crear Cuenta</h2>
+      <form method="POST" action="{{ url_for('register') }}">
+        <div class="form-group">
+          <label class="form-label" for="name">Nombre completo</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            class="form-control"
+            placeholder="Juan Pérez"
+            required
+            autocomplete="name"
+            value="{{ request.form.get('name', '') }}"
+          >
+        </div>
         <div class="form-group">
           <label class="form-label" for="email">Email</label>
           <input
@@ -42,6 +55,7 @@
             placeholder="tu@email.com"
             required
             autocomplete="email"
+            value="{{ request.form.get('email', '') }}"
           >
         </div>
         <div class="form-group">
@@ -51,34 +65,30 @@
             id="password"
             name="password"
             class="form-control"
-            placeholder="••••••••"
+            placeholder="Mínimo 4 caracteres"
             required
-            autocomplete="current-password"
+            autocomplete="new-password"
           >
         </div>
-        <button type="submit" class="btn btn-primary">Entrar</button>
+        <div class="form-group">
+          <label class="form-label" for="password2">Repetir contraseña</label>
+          <input
+            type="password"
+            id="password2"
+            name="password2"
+            class="form-control"
+            placeholder="••••••••"
+            required
+            autocomplete="new-password"
+          >
+        </div>
+        <button type="submit" class="btn btn-primary">Crear cuenta</button>
       </form>
     </div>
 
     <div class="login-footer">
-      ¿No tenés cuenta?
-      <a href="{{ url_for('register') }}" class="login-footer-link">Registrate gratis</a>
-    </div>
-
-    <div class="login-demo">
-      <div class="login-demo-label">Accesos de demostración</div>
-      <div class="login-demo-item">
-        <span class="login-demo-role">Cliente</span>
-        <span class="login-demo-creds">lucas@demo.com / 1234</span>
-      </div>
-      <div class="login-demo-item">
-        <span class="login-demo-role">Barbero</span>
-        <span class="login-demo-creds">tito@demo.com / 1234</span>
-      </div>
-      <div class="login-demo-item">
-        <span class="login-demo-role">Admin</span>
-        <span class="login-demo-creds">admin@demo.com / 1234</span>
-      </div>
+      ¿Ya tenés cuenta?
+      <a href="{{ url_for('login') }}" class="login-footer-link">Iniciá sesión</a>
     </div>
   </div>
 </div>
